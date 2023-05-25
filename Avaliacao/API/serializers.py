@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from Avaliacao.models import Avaliacao
 
-class ComentariosSerializer(ModelSerializer):
+class AvaliacaoSerializer(ModelSerializer):
     class Meta:
         model = Avaliacao
         fields = ('id', 'usuario_avaliado', 'usuario', 'nota', 'notaNegociacao', 'notaClickAutos', 'comentario', 'aprovada', 'criado_em', 'expira_em') 
