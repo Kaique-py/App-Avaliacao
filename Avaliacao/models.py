@@ -1,16 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import User
-#from users.models import User
-#from core.models import Anuncio
+#from django.contrib.auth.models import User
+from users.models import User
+from core.models import Anuncio
 
 """Vou deixar alguns campos comentados (#) apenas para rodar o servidor, tenho que apagar antes de repassar."""
 
 class Avaliacao(models.Model):
     #Usuario que está sendo avaliado (vendedor)
-    usuario_avaliado = models.ForeignKey(User, related_name='user_usuario_avaliado', on_delete=models.CASCADE)
+    usuario_avaliado = models.ForeignKey(User, on_delete=models.CASCADE)
 
     #Usuario que está avaliando (comprador)
-    usuario = models.ForeignKey(User, related_name='user_usuario', on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     nota = models.IntegerField(default=0) #Como você avalia o vendedor.
     notaNegociacao = models.IntegerField(default=5) #Como a negociação fluiu.
@@ -18,7 +18,7 @@ class Avaliacao(models.Model):
     comentario = models.TextField(null=True, blank=True)
     aprovada = models.BooleanField(default=False)
 
-    #anuncio = models.ForeignKey(Anuncio, on_delete=models.CASCADE)
+    anuncio = models.ForeignKey(Anuncio, on_delete=models.CASCADE)
 
     criado_em = models.DateTimeField(auto_now_add=True)
     expira_em = models.DateTimeField(null=True, blank=True)
@@ -28,4 +28,4 @@ class Avaliacao(models.Model):
         verbose_name_plural = 'Avaliações' #Só pra deixar o plural correto.
 
     def __str__(self):
-        return self.usuario_avaliado.first_name
+        return self.usuario_avaliado
