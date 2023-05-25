@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 
 class Avaliacao(models.Model):
     #Usuario que está sendo avaliado (vendedor)
-    usuario_avaliado = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario_avaliado = models.ForeignKey(User, related_name='user_usuario_avaliado', on_delete=models.CASCADE)
 
     #Usuario que está avaliando (comprador)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, related_name='user_usuario', on_delete=models.CASCADE)
 
     nota = models.IntegerField(default=0) #Como você avalia o vendedor.
     notaNegociacao = models.IntegerField(default=5) #Como a negociação fluiu.
@@ -21,11 +21,11 @@ class Avaliacao(models.Model):
     #anuncio = models.ForeignKey(Anuncio, on_delete=models.CASCADE)
 
     criado_em = models.DateTimeField(auto_now_add=True)
-    expira_em = models.DateTimeField(blank=True)
+    expira_em = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ('usuario_avaliado',) #Aqui ordenamos pelo nome do vendedor, em ordem alfabética.
         verbose_name_plural = 'Avaliações' #Só pra deixar o plural correto.
 
     def __str__(self):
-        return self.usuario_avaliado
+        return self.usuario_avaliado.first_name
